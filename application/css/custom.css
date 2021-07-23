@@ -1,0 +1,154 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+
+//custom css
+
+.logo1 {
+width:100px;	
+	
+}
+.loading{
+position:absolute;
+top:0;
+height:100%;
+width:100%;
+
+display:none;
+}
+
+.loading div{
+padding:20px;
+margin:15% auto;
+border-radius:20px;
+background-color:#FFF;
+width:30%;
+
+}
+
+.loading div img{
+width:20%;	
+}
+.nomargin {
+margin:0;
+padding:0;	
+}
+.header{
+background-color:#003;	
+color:#FFF;
+}
+
+.spacersmall{
+height:20px;
+margin:0;
+padding:0;
+
+}
+.paddingsmall {
+padding:20px;	
+}
+
+.iconsmall img {
+width:20%;	
+}
+
+#parameter{
+  padding:0;	
+  margin:0;
+  border-collapse:collapse;
+  font-size:.8em;
+}
+
+.smallfont {
+font-size:.9em;	
+}
+
+#classSelected ul,#schedulelist ul{
+font-size:.8em;	
+list-style:none;
+text-align:left;
+margin:0;	
+padding:0;
+color:#036;
+}
+#classSelected ul li,#schedulelist ul li {
+margin:0;
+}
+
+#classSelected table {
+font-size:.8em;
+}
+
+.shadow{
+box-shadow:3px 3px 3px 2px #333;	
+}
+
+.smallestselect{
+font-size:.9em;	
+width:50px;
+padding:5px;	
+}
+.smallselect{
+font-size:.9em;	
+width:100px;
+padding:5px;	
+}
+
+.mediumselect{
+font-size:.9em;	
+width:150px;
+padding:5px;	
+}
+.largeselect{
+font-size:.9em;	
+width:250px;
+padding:5px;	
+}
+
+#studentlist {
+height:500px;
+overflow-y:auto;
+font-size:.8em;
+	
+}
+#bodyloader{
+margin:10% auto;
+display:block;	
+}
+
+#divparameter {
+	font-size:1em;
+
+}
+
+#divparameter table {
+	
+	width:100%;
+	padding:10px;
+}
+.nodisplay {
+display:none;	
+}
+
+#classes{
+overflow:auto;
+padding:10px;	
+}
+
+#classes #tblattendance,#classes #tblattendance tr{
+border:none;
+border-collapse:collapse;	
+}
+
+#tblattendance {
+  font-size:.8em;	
+}
+
+.studentabsent{
+background-color:#F00;
+color:#FFF;	
+}
+
+

@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Create Posts</title>
+<link href='assets/bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+<link href='assets/css/user.css' rel='stylesheet'>
+<link href='assets/css/jquery-ui.css' rel='stylesheet'>
+
+
+<script src='assets/js/jquery.min.js' type='text/javascript'></script>
+<script src='assets/bootstrap/js/bootstrap.min.js' type='text/javascript'></script>
+<script src='assets/js/jquery-ui.js' type='text/javascript'></script>
+
+
+
+
+
+<script>
+$(document).ready(function(e) {
+	
+	$("#eventdate").datepicker({ dateFormat: 'dd/mm/yy' });
+	
+	$(".edate").hide();
+	$("#loader").hide();
+	
+	$("#frmpost").submit(function(e) {
+		
+		  $("#posttitle").next().remove("span");
+		   $("#postimage").next().remove("span");
+		    $("#postcontent").next().remove("span");
+  e.preventDefault();
+	var title=$("#posttitle").val();
+	var image=$("#postimage").val();
+	var category=$("#postcategory").val();
+	var content=$(".postcontent").html();
+	
+	
+	if(title==''){
+			$("#posttitle").after("<span><p class='alert alert-warning'>Please enter post title</p></span>");
+		return false;
+	}	
+	else if(image==''){
+			$("#postimage").after("<span><p class='alert alert-warning'>Select an image</p></span>");
+		return false;
+	}	
+	else if($("#postcontent").val()==''){
+		$("#postcontent").after("<span><p class='alert alert-warning'>Enter post content</p></span>");
+		return false;
+	}
+	
+	else if(($("#postcategory").val()=='upcoming') && $("#eventdate").val()==""){
+		$("#eventdate").after("<span><p class='alert alert-warning'>Enter date for upcoming event</p></span>");
+		return false;
+	}
+	else {
+		$("#loader").show();
+		
+		var formData = new FormData($(this)[0]);
+	
+	$.ajax({
+	type:"POST",
+	url:"script/posts.php",
+	data:formData,
+	processData: false,
+    contentType: false,
+	success:function(result){
+		alert(result);
+			$("#loader").hide();
+			window.location.href='posts.html';
+			
+	
+	
+	}
+	});
+
+	}
+	
+	
+});
+	
+	
+	
+	
+	
+	
+$("#posttitle").keydown(function(e) {
+    $(this).next().remove("span");
+});
+
+
+$("#postimage").change(function(e) {
+    $(this).next().remove("span");
+});
+$("#postcontent").keydown(function(e) {
+    $(this).next().remove("span");
+});
+
+$("#eventdate").keydown(function(e) {
+     $(this).next().remove("span");
+});
+
+$("#postcategory").change(function(e) {
+    if($(this).val()=='upcoming'){
+		$(".edate").show();
+	}
+});
+
+
+
+});
+
+
+
+function add_html(tag){
+	
+target=$("#postcontent");
+
+	switch(tag){
+		case "p":
+		content="<p></p>\n"
+		break;	
+		
+		case "bullets":
+		content="<ul>\n";
+		content+="<li>Item 1</li>\n";
+		content+="<li>Item 2</li>\n";
+		content+="</ul>\n";
+		break;	
+		
+		case "numbers":
+		content="<ol>\n";
+		content+="<li>Item 1</li>\n";
+		content+="<li>Item 2</li>\n";
+		content+="</ol>\n";
+		break;	
+		
+		
+	}
+	target.val(target.val() + content);
+}
+
+function show_url(){
+	 var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("postimage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("imagepreview").src = oFREvent.target.result;
+        };
+}
+</script>
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row headersection">
+    <div class='col-md-1'>
+    <a href='index.php'><img src='assets/img/logo.png' class='img img-responsive'></a>
+    </div>
+		<div class="col-md-7">
+		
+				<h1>
+					<strong>KEMUDA</strong> <small style='color:#FC0;'>News and Activity Page</small>
+				</h1>
+		
+		</div>
+		<div class="col-md-2">
+			
+		
+				
+					
+				
+                    
+						
+						<br/>
+                        	<input class="form-control" type="text" placeholder="search"/>
+					
+						
+					
+					
+				
+				
+			
+		</div>
+	</div>
+    </div>
+
+<div class='container'>
+<div class="row">
+<div class='col-md-12'>
+<h1>Create new post</h1>
+</div>
+</div>
+<div class='row postbody'>
+<div class='col-md-12'>
+<form id='frmpost' enctype="multipart/form-data" method='post'>
+<table class='table'>
+	<tr>
+    <th>*Title:</th>
+    <td><input type='text' class='form-control inputmedium'  id='posttitle' name='posttitle'></td>
+    </tr>
+    
+    <tr>
+    <th>*Image:</th>
+    <td>
+   		<input type='file' id='postimage' accept="image/*" name='postimage'>
+    
+    </td>
+    </tr>
+    
+    <tr>
+    <th>*Post In:</th>
+    <td>
+    <select id='postcategory' class='form-control inputsmall' name='postcategory'>
+    <option value='activities'>Activities</option>
+    <option value='annoucements'>Announcement</option>
+     <option value='upcoming'>Upcoming Events</option>
+    </select>
+   
+    </td>
+    
+    </tr>
+   <tr class='edate'>
+   	<th>*Event date</th>
+    <td><input type='text' name='eventdate' id='eventdate' readonly placeholder="mm/dd/yyyy" maxlength="10" class='form-control inputsmall'></td>
+   </tr>
+    </table>
+<input type='hidden' name='save' value='save'>
+      	<input type='submit' class='btn btn-primary pull-right' style='margin-right:50px' value='Save Post'>
+      <p class='text-muted pull-right' id='loader'>Saving post.. <img src='assets/img/progress.gif' width='30px'></p>
+  	<div class='postcontent center-block'>
+    <well>
+    <span class='btn btn-success' onClick="add_html('p')">Insert Paragraph</span>
+    <span class='btn btn-success' onClick="add_html('bullets')"><img src='assets/img/bullets.png' width='15px'></span>
+    <span class='btn btn-success' onClick="add_html('numbers')"><img src='assets/img/numbers.png' width='15px'></span>
+    </well>
+    <textarea name='postcontent' id='postcontent' class='form-control' rows='15'></textarea>
+		
+    </div>
+   <br/>
+   <br/>
+    
+</form>
+
+</div>
+</div>
+</div>
+
+
+</body>
+</html>

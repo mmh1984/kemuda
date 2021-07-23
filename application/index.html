@@ -1,0 +1,122 @@
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Class Scheduling</title>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Lato|Slabo+27px" rel="stylesheet">
+<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script src="../js/jquery.min.js" type="text/javascript"></script>
+<script src="../js/bootstrap.min.js" type="text/javascript"></script>
+
+
+<script>
+
+$(document).ready(function(e) {
+    $("#email").keydown(function(e) {
+        $(".message").html("");
+    });
+	 $("#password").keydown(function(e) {
+        $(".message").html("");
+    });
+});
+
+function login(){
+
+var email=$("#email").val();
+var password=$("#password").val();
+
+if(email=='') {
+$(".message").html("<p class='alert alert-warning'>Please enter your email</p>");	
+
+}
+else if(password=='') {
+	$(".message").html("<p class='alert alert-warning'>Please enter your password</p>");	
+}
+else {
+	$(".message").html("<img src='images/ajax-loader.gif' class='center-block'>");
+	$.ajax({
+	type:"POST",
+	url:"functions.php",
+	data:{
+	option:"login",
+	email:email,
+	password:password	
+	},	
+	success:function(result){
+		if(result=='failed') {
+			$(".message").html("<p class='alert alert-warning'>Login failed!</p>");	
+			
+		}
+		else {
+			alert("Login successfull.Page Redirecting....");
+		
+		  	window.location.href='application.php';
+			
+		}
+	}	
+	});
+		
+}
+}
+
+</script>
+</head>
+
+<body style="background:rgba(51,51,51,1);">
+<div class="container-fluid">
+<div class="row nomargin header" >
+<div class="col-md-1" >
+<img src="images/logo.png" class="img-responsive">
+</div>
+<div class="col-md-6">
+<h2 class="page-header">KEMUDA <small>Institute</small></h2>
+</div>
+<div class="col-md-5">
+<P class="spacersmall">&nbsp;</P>
+<P class="spacersmall">&nbsp;</P>
+
+
+</div>
+</div>
+<div class="row spacersmall"></div>
+<div class="row spacersmall"></div>
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+<div class="panel panel-primary" style="box-shadow:1px 2px 10px 2px #000;";>
+	<div class="panel-heading" style='background-color:#003;'><h4 class="panel-title">Login</h4></div>
+    <div class="panel-body well">
+  
+    <table class="table table-responsive">
+    	<tr>
+        <td><input type="email" id="email" class="form-control text-center" placeholder="email@kemudainstitute.com"></td>
+        </tr>
+        
+        <tr>
+        <td><input type="password" id="password" class="form-control text-center" placeholder="********"></td>
+        </tr>
+        
+        <tr>
+        <td><span class='message text-center'></span></td>
+        </tr>
+    </table>
+    <tr>
+        <td><button class="btn btn-primary center-block" onClick="login()">Login</button></td>
+        </tr>
+    </table>
+    
+    </div>
+    <div class="footer"><p align="center">copyright &copy; KEMUDA 2017</p></div>
+</div>
+</div>
+<div class="col-md-4"></div>
+
+</div>
+
+</div>
+</body>
+</html>
